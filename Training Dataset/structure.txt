@@ -1,4 +1,4 @@
-CMP_23/Male/*.jpg
-CMP_23/Female/*.jpg
+CMP_23/Males/*.jpg
+CMP_23/Females/*.jpg
 
 dataset link: https://www.kaggle.com/datasets/essamwisamfouad/cmp23-handwritten-males-vs-females?resource=download
