@@ -10,7 +10,7 @@ def main():
         classifier = Classifier(SPLIT_TRAINING_DATA)
         (predictions, accuracy) = classifier.classify()
         print(f"Model Accuracy = {round(accuracy * 100, 2)}%.")
-   
+        
     else:                                   # for project submission
         test_dataset_path = sys.argv[1]
         output_dir = sys.argv[2]
@@ -22,7 +22,7 @@ def main():
         for i in range(len(X_test)):
             start = time.time()
             feature_vector = classifier.get_feature_vector(X_test[i], single_data_item = True)
-            classification_results.append(classifier.classify(feature_vector))
+            classification_results.append(classifier.classify(feature_vector)[0])
             end = time.time()
             execution_time = round(end - start, 2)
             if execution_time == 0.0:
