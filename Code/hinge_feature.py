@@ -4,9 +4,9 @@ from PIL import Image, ImageEnhance
 
 
 # hinge feature parameters
-N_ANGLE_BINS = 40
-BIN_SIZE = 360 // N_ANGLE_BINS
-LEG_LENGTH = 25
+p = 40                              # number of angle bins
+bin_size = 360 // p
+r = 25                              # leg length
 
 def preprocess_image(image: np.ndarray, sharpness_factor = 10, bordersize = 3):
         image = Image.fromarray(image)
@@ -52,17 +52,17 @@ def get_hinge_features(image_path = None, image = None):
     preprocessed_image = preprocess_image(image)
     contours = get_contour_pixels(preprocessed_image)
 
-    hist = np.zeros((N_ANGLE_BINS, N_ANGLE_BINS))
+    hist = np.zeros((p, p))
 
     for cnt in contours:
         n_pixels = len(cnt)
-        if n_pixels <= LEG_LENGTH:
+        if n_pixels <= r:
             continue
 
         points = np.array([point[0] for point in cnt])
         (xs, ys) = (points[:, 0], points[:, 1])
-        point_1s = np.array([cnt[(i + LEG_LENGTH) % n_pixels][0] for i in range(n_pixels)])
-        point_2s = np.array([cnt[(i - LEG_LENGTH) % n_pixels][0] for i in range(n_pixels)])
+        point_1s = np.array([cnt[(i + r) % n_pixels][0] for i in range(n_pixels)])
+        point_2s = np.array([cnt[(i - r) % n_pixels][0] for i in range(n_pixels)])
         (x1s, y1s) = (point_1s[:, 0], point_1s[:, 1])
         (x2s, y2s) = (point_2s[:, 0], point_2s[:, 1])
 
@@ -72,8 +72,8 @@ def get_hinge_features(image_path = None, image = None):
         indices = np.where(phi_2s > phi_1s)[0]
 
         for i in indices:
-            phi1 = int(phi_1s[i] // BIN_SIZE) % N_ANGLE_BINS
-            phi2 = int(phi_2s[i] // BIN_SIZE) % N_ANGLE_BINS
+            phi1 = int(phi_1s[i] // bin_size) % p
+            phi2 = int(phi_2s[i] // bin_size) % p
             hist[phi1, phi2] += 1
 
     normalized_hist = hist / np.sum(hist)

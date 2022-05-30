@@ -7,10 +7,12 @@ SPLIT_TRAINING_DATA = True      # Split the CMP_23 dataset into training and tes
 def main():
 
     if SPLIT_TRAINING_DATA == True:        # for development
-        classifier = Classifier(SPLIT_TRAINING_DATA)
-        (predictions, accuracy) = classifier.classify()
-        # print(f"Model Accuracy = {round(accuracy * 100, 2)}%.")
-        print(round(accuracy * 100, 2))
+        n = 100
+        accuracies = np.empty((1, n))
+        for i in range(n):
+            classifier = Classifier(SPLIT_TRAINING_DATA)
+            (predictions, accuracies[0][i]) = classifier.classify()
+        print(round(np.average(accuracies) * 100, 2))
         
     else:                                   # for project submission
         test_dataset_path = sys.argv[1]

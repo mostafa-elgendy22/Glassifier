@@ -85,8 +85,7 @@ class Classifier:
 
     def __get_datasets(self, X, Y):
         if self.__SPLIT_TRAINING_DATA:
-            X_train, X_test, Y_train, Y_test = train_test_split(
-                X, Y, test_size=0.5)
+            X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.5)
             # print(f"Size of the training dataset is: {X_train.shape[0]} ({np.sum(Y_train)} males, {X_train.shape[0] - np.sum(Y_train)} females).")
             # print(f"Size of the test dataset is: {X_test.shape[0]} ({np.sum(Y_test)} males, {X_test.shape[0] - np.sum(Y_test)} females).")
             return X_train, X_test, Y_train, Y_test
@@ -95,8 +94,8 @@ class Classifier:
             # print(f"Size of the training dataset is: {X_train.shape[0]} ({np.sum(Y_train)} males, {X_train.shape[0] - np.sum(Y_train)} females).")
             return X_train, None, Y_train, None
 
-    # get training dataset feature vector
 
+    # get training dataset feature vector
     def get_feature_vector(self, X, single_data_item=False):
         if single_data_item:
             hinge = get_hinge_features(image=X)
@@ -140,12 +139,7 @@ class Classifier:
 
         self.__classifiers = [
             # SVM classifer
-            svm.SVC(C=1.0, random_state=1, kernel='linear'),
-            # Random Forest
-            RandomForestClassifier(),
-            LogisticRegression(),
-            KNeighborsClassifier(),
-            LDA()
+            svm.SVC(C=10, random_state=1, kernel='rbf'),
         ]
 
         # combine
