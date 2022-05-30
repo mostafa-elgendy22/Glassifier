@@ -96,7 +96,7 @@ class Classifier:
         self.__sc = StandardScaler()
         self.__sc.fit(self.__X_train)
         self.__X_train_std = self.__sc.transform(self.__X_train)
-        self.__classifier = svm.SVC(C = 10, random_state = 1, kernel = 'rbf')
+        self.__classifier = svm.SVC(C = 10)
         self.__classifier.fit(self.__X_train_std, self.__Y_train)
 
 
