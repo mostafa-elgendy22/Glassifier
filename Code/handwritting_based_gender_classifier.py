@@ -6,6 +6,7 @@ from sklearn import svm
 from sklearn import metrics
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
 from hinge_feature import get_hinge_features
 from chaincode_feature import get_chaincode_features
 
@@ -96,13 +97,23 @@ class Classifier:
             return hinge, chaincode
 
 
+    # def __pca(self, n, X):
+    #     pca = PCA(n_components = n)
+    #     pca.fit(X)
+    #     print(pca.explained_variance_ratio_)
+    #     return pca.transform(X)
+
+
     def __train_model(self):
         # svm_classifier = svm.SVC(kernel='linear')
         # svm_classifier.fit(self.__training_feature_vector, self.__Y_train)
         # self.__classifier = svm_classifier
-        self.__sc = sc = StandardScaler()
+        self.__sc = StandardScaler()
         self.__sc.fit(self.__X_train)
         self.__X_train_std = self.__sc.transform(self.__X_train)
+
+        # self.__X_train_std = self.__pca(0.90, self.__X_train_std)
+
         self.__classifier = svm.SVC(C = 1.0, random_state = 1, kernel = 'linear')
         self.__classifier.fit(self.__X_train_std, self.__Y_train)
         
@@ -110,6 +121,7 @@ class Classifier:
     def classify(self, feature_vector = None):
         if self.__SPLIT_TRAINING_DATA:
             X_test_std = self.__sc.transform(self.__X_test)
+            # X_test_std = self.__pca(sel f.__X_train_std.shape[1], X_test_std)
             Y_predicted = self.__classifier.predict(X_test_std)
             return (Y_predicted, metrics.accuracy_score(self.__Y_test, Y_predicted))
         else:
