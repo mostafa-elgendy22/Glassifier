@@ -3,11 +3,9 @@ import cv2
 import glob
 import numpy as np
 from sklearn import svm
-from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
 from sklearn import metrics
-from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.decomposition import PCA
+from sklearn.model_selection import train_test_split
 from hinge_feature import get_hinge_features
 from chaincode_feature import get_chaincode_features
 
@@ -34,6 +32,7 @@ class Classifier:
         self.__train_model()
 
 
+    # read CMP_23 dataset
     def __read_training_dataset(self):
         x_train = []
         y_train = []
@@ -53,7 +52,7 @@ class Classifier:
         return x_train, y_train
 
 
-    # for project submission
+    # read the test dataset from the given path
     def read_test_dataset(self, test_dataset_path):
         x_test = []
         for file_name in sorted(glob.glob(test_dataset_path + "*.jpg")):
@@ -93,20 +92,10 @@ class Classifier:
             return hinge, chaincode
 
 
-    # def __pca(self, n, X):
-    #     pca = PCA(n_components = n)
-    #     pca.fit(X)
-    #     print(pca.explained_variance_ratio_)
-    #     return pca.transform(X)
-
-
     def __train_model(self):
         self.__sc = StandardScaler()
         self.__sc.fit(self.__X_train)
         self.__X_train_std = self.__sc.transform(self.__X_train)
-
-        # self.__X_train_std = self.__pca(0.90, self.__X_train_std)
-
         self.__classifier = svm.SVC(C = 10, random_state = 1, kernel = 'rbf')
         self.__classifier.fit(self.__X_train_std, self.__Y_train)
 
@@ -114,7 +103,6 @@ class Classifier:
     def classify(self, feature_vector = None):
         if self.__SPLIT_TRAINING_DATA:
             X_test_std = self.__sc.transform(self.__X_test)
-            # X_test_std = self.__pca(sel f.__X_train_std.shape[1], X_test_std)
             Y_predicted = self.__classifier.predict(X_test_std)
             return (Y_predicted, metrics.accuracy_score(self.__Y_test, Y_predicted))
         else:
