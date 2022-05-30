@@ -13,9 +13,9 @@ def main():
         
     else:                                   # for project submission
         test_dataset_path = sys.argv[1]
-        output_dir = sys.argv[2]
-        classifier = Classifier(SPLIT_TRAINING_DATA, test_dataset_path)
-        X_test = classifier.read_test_dataset()
+        output_dir_path = sys.argv[2]
+        classifier = Classifier(SPLIT_TRAINING_DATA)
+        X_test = classifier.read_test_dataset(test_dataset_path)
         execution_times = []
         classification_results = []
 
@@ -28,5 +28,17 @@ def main():
             if execution_time == 0.0:
                 execution_time == 10 ** -3
             execution_times.append(execution_time)
+
+        results_file = open(output_dir_path + 'results.txt', 'w')
+        times_file = open(output_dir_path + 'times.txt', 'w')
+
+        for i in range(len(execution_times)):
+            results_file.write(str(classification_results[i]))
+            times_file.write(str(execution_times[i]))
+            if i != len(execution_times) - 1:
+                results_file.write('\n')
+                times_file.write('\n')
+
+
 
 main()

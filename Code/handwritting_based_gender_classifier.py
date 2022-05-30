@@ -1,21 +1,20 @@
 # Imports
-from hinge_feature import get_hinge_features
-from chaincode_feature import get_chaincode_features
 import cv2
-import numpy as np
 import glob
+import numpy as np
 from sklearn import svm
 from sklearn import metrics
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+from hinge_feature import get_hinge_features
+from chaincode_feature import get_chaincode_features
 
 FEATURES_SAVED = True
 
 class Classifier:
     
-    def __init__(self, SPLIT_TRAINING_DATA: bool, test_dataset_path = None):
+    def __init__(self, SPLIT_TRAINING_DATA: bool):
         self.__SPLIT_TRAINING_DATA = SPLIT_TRAINING_DATA
-        self.__test_dataset_path = test_dataset_path
 
         X, Y = self.__read_training_dataset()
         
@@ -36,6 +35,7 @@ class Classifier:
     def __read_training_dataset(self):
         x_train = []
         y_train = []
+
         # Male training data acquisition
         for file_name in sorted(glob.glob('../Training Dataset/CMP_23/Males/*.jpg')):
             # img = cv2.imread(file_name)      # cv2.imread reads images in RGB format
@@ -54,17 +54,16 @@ class Classifier:
 
 
     # for project submission
-    def read_test_dataset(self):
+    def read_test_dataset(self, test_dataset_path):
         x_test = []
-        for file_name in sorted(glob.glob(self.__test_dataset_path + "*.jpg")):
+        for file_name in sorted(glob.glob(test_dataset_path + "*.jpg")):
             img = cv2.imread(file_name)      # cv2.imread reads images in RGB format
             x_test.append(img)
-        x_test = np.asarray(x_test)
+        x_test = np.asarray(x_test, dtype = 'object')
         return x_test
 
 
     def __get_datasets(self, X, Y):
-        
         if self.__SPLIT_TRAINING_DATA:
             X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.5)
             print(f"Size of the training dataset is: {X_train.shape[0]} ({np.sum(Y_train)} males, {X_train.shape[0] - np.sum(Y_train)} females).")
@@ -79,7 +78,11 @@ class Classifier:
     # get training dataset feature vector
     def get_feature_vector(self, X, single_data_item = False):
         if single_data_item:
-            feature_vector = np.concatenate(get_hinge_features(image = X), get_chaincode_features(image = X))
+            hinge = get_hinge_features(image = X)
+            hinge = np.reshape(hinge, (1, hinge.shape[0]))
+            chaincode = get_chaincode_features(image = X)
+            chaincode = np.reshape(chaincode, (1, chaincode.shape[0]))
+            feature_vector = np.concatenate((hinge, chaincode), axis = 1)
             return feature_vector
         else:
             hinge = []
@@ -97,10 +100,9 @@ class Classifier:
         # svm_classifier = svm.SVC(kernel='linear')
         # svm_classifier.fit(self.__training_feature_vector, self.__Y_train)
         # self.__classifier = svm_classifier
-        sc = StandardScaler()
-        sc.fit(self.__X_train)
-        self.__X_train_std = sc.transform(self.__X_train)
-        self.__sc = sc
+        self.__sc = sc = StandardScaler()
+        self.__sc.fit(self.__X_train)
+        self.__X_train_std = self.__sc.transform(self.__X_train)
         self.__classifier = svm.SVC(C = 1.0, random_state = 1, kernel = 'linear')
         self.__classifier.fit(self.__X_train_std, self.__Y_train)
         
@@ -109,7 +111,6 @@ class Classifier:
         if self.__SPLIT_TRAINING_DATA:
             X_test_std = self.__sc.transform(self.__X_test)
             Y_predicted = self.__classifier.predict(X_test_std)
-            # Y_predicted = cross_val_predict(self.__classifier, self.__X_test, self.__Y_test, cv = 10)  
             return (Y_predicted, metrics.accuracy_score(self.__Y_test, Y_predicted))
         else:
-            return self.__classifier.predict(feature_vector)
+            return self.__classifier.predict(self.__sc.transform(feature_vector))

@@ -1,7 +1,5 @@
 import cv2
 import numpy as np
-import glob
-from collections import defaultdict
 from PIL import Image, ImageEnhance
 
 
