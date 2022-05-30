@@ -34,12 +34,17 @@ def preprocess_image(image: np.ndarray, sharpness_factor=10, bordersize=3):
         return preprocessed_image
 
 
-def get_contour_pixels(preprocessed_image: np.ndarray):
+def get_contour_pixels(preprocessed_image: np.ndarray, th1 = 100000, th2 = 1000):
+    imgh, imgw = np.shape(preprocessed_image)
+    imgarea = imgh * imgw
     contours, _ = cv2.findContours(preprocessed_image, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
-    contours = sorted(contours, key=cv2.contourArea, reverse=True)[1:]
+    
+    # contours_filt = sorted(contours, key=cv2.contourArea, reverse=True)[1:]
+    contours_filt = list(filter(lambda cnt: imgarea/th1 <= cv2.contourArea(cnt) <= imgarea/th2, contours))
+
     image2 = preprocessed_image.copy()[:, :, np.newaxis]
     image2 = np.concatenate([image2, image2, image2], axis=2)
-    return contours
+    return contours_filt
 
 
 def get_hinge_features(image_path = None, image = None):
