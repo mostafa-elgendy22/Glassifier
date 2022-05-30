@@ -8,30 +8,34 @@ p = 40                              # number of angle bins
 bin_size = 360 // p
 r = 25                              # leg length
 
-def preprocess_image(image: np.ndarray, sharpness_factor = 10, bordersize = 3):
-        image = Image.fromarray(image)
-        enhancer = ImageEnhance.Sharpness(image)
-        image = enhancer.enhance(sharpness_factor)
+# preprocessing parameters
+sharpness_factor = 10
+bordersize = 3
 
-        (height, width) = (image.height * 2, image.width * 2)
-        image = image.resize((width, height))
+def preprocess_image(image: np.ndarray):
+    image = Image.fromarray(image)
+    enhancer = ImageEnhance.Sharpness(image)
+    image = enhancer.enhance(sharpness_factor)
 
-        image = np.asarray(image)
-        image = cv2.copyMakeBorder(
-            image,
-            top=bordersize,
-            bottom=bordersize,
-            left=bordersize,
-            right=bordersize,
-            borderType=cv2.BORDER_CONSTANT,
-            value=[255, 255, 255]
-        )
+    (height, width) = (image.height * 2, image.width * 2)
+    image = image.resize((width, height))
 
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        image = cv2.GaussianBlur(image, (3, 3), 0)
+    image = np.asarray(image)
+    image = cv2.copyMakeBorder(
+        image,
+        top = bordersize,
+        bottom = bordersize,
+        left = bordersize,
+        right = bordersize,
+        borderType = cv2.BORDER_CONSTANT,
+        value=[255, 255, 255]
+    )
 
-        (_, preprocessed_image) = cv2.threshold(image, 127, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-        return preprocessed_image
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    image = cv2.GaussianBlur(image, (3, 3), 0)
+
+    (_, preprocessed_image) = cv2.threshold(image, 127, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+    return preprocessed_image
 
 
 def get_contour_pixels(preprocessed_image: np.ndarray, th1 = 100000, th2 = 1000):
@@ -39,9 +43,7 @@ def get_contour_pixels(preprocessed_image: np.ndarray, th1 = 100000, th2 = 1000)
     imgarea = imgh * imgw
     contours, _ = cv2.findContours(preprocessed_image, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
     
-    # contours_filt = sorted(contours, key=cv2.contourArea, reverse=True)[1:]
     contours_filt = list(filter(lambda cnt: imgarea/th1 <= cv2.contourArea(cnt) <= imgarea/th2, contours))
-
     return contours_filt
 
 

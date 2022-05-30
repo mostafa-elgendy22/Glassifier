@@ -2,7 +2,7 @@ import sys
 import time
 from handwritting_based_gender_classifier import *
 
-SPLIT_TRAINING_DATA = True      # Split the CMP_23 dataset into training and test data
+SPLIT_TRAINING_DATA = False      # Split the CMP_23 dataset into training and test data
 
 def main():
 
@@ -13,7 +13,9 @@ def main():
             classifier = Classifier(SPLIT_TRAINING_DATA)
             (predictions, accuracies[0][i]) = classifier.classify()
         print(round(np.average(accuracies) * 100, 2))
-        
+        # classifier = Classifier(SPLIT_TRAINING_DATA)
+        # (predictions, accuracy) = classifier.classify()
+
     else:                                   # for project submission
         test_dataset_path = sys.argv[1]
         output_dir_path = sys.argv[2]
