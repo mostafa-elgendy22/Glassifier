@@ -1,7 +1,27 @@
 import cv2
 import numpy as np
 from collections import defaultdict
-from hinge_feature import preprocess_image
+from PIL import Image, ImageEnhance
+
+
+def preprocess_image(image: np.ndarray, sharpness_factor = 10, bordersize = 3):
+
+        image = Image.fromarray(image)
+        enhancer = ImageEnhance.Sharpness(image)
+        image = enhancer.enhance(sharpness_factor)
+        image = np.asarray(image)
+
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        image = cv2.GaussianBlur(image, (3, 3), 0)
+
+        (_, image) = cv2.threshold(image, 127, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+        
+        kernel3 = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
+        kernel5 = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
+        image = cv2.morphologyEx(image, cv2.MORPH_DILATE, kernel3)
+        image = cv2.morphologyEx(image, cv2.MORPH_ERODE, kernel5)
+
+        return image
 
 def chaincodes_from_contours(contours):
     # dx, dy -> direction
