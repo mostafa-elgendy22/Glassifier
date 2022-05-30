@@ -8,7 +8,7 @@ N_ANGLE_BINS = 40
 BIN_SIZE = 360 // N_ANGLE_BINS
 LEG_LENGTH = 25
 
-def preprocess_image(image: np.ndarray, sharpness_factor=10, bordersize=3):
+def preprocess_image(image: np.ndarray, sharpness_factor = 10, bordersize = 3):
         image = Image.fromarray(image)
         enhancer = ImageEnhance.Sharpness(image)
         image = enhancer.enhance(sharpness_factor)
@@ -30,15 +30,13 @@ def preprocess_image(image: np.ndarray, sharpness_factor=10, bordersize=3):
         image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         image = cv2.GaussianBlur(image, (3, 3), 0)
 
-        (_, preprocessed_image) = cv2.threshold(image, 128, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+        (_, preprocessed_image) = cv2.threshold(image, 127, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
         return preprocessed_image
 
 
 def get_contour_pixels(preprocessed_image: np.ndarray):
     contours, _ = cv2.findContours(preprocessed_image, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
     contours = sorted(contours, key=cv2.contourArea, reverse=True)[1:]
-    image2 = preprocessed_image.copy()[:, :, np.newaxis]
-    image2 = np.concatenate([image2, image2, image2], axis=2)
     return contours
 
 
