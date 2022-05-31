@@ -55,12 +55,14 @@ class Classifier:
     # read the test dataset from the given path
     def read_test_dataset(self, test_dataset_path):
         x_test = []
+        x_test_names = []
         for file_name in sorted(glob.glob(test_dataset_path + "*.jpg")):
             # cv2.imread reads images in RGB format
             img = cv2.imread(file_name)
+            x_test_names.append(file_name)
             x_test.append(img)
-        x_test = np.asarray(x_test, dtype='object')
-        return x_test
+        x_test = np.asarray(x_test)
+        return x_test, x_test_names
 
 
     def __get_datasets(self, X, Y):

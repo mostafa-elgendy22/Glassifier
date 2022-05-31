@@ -20,7 +20,7 @@ def main():
         test_dataset_path = sys.argv[1]
         output_dir_path = sys.argv[2]
         classifier = Classifier(SPLIT_TRAINING_DATA)
-        X_test = classifier.read_test_dataset(test_dataset_path)
+        X_test, X_test_names = classifier.read_test_dataset(test_dataset_path)
         execution_times = []
         classification_results = []
 
@@ -34,15 +34,18 @@ def main():
                 execution_time == 10 ** -3
             execution_times.append(execution_time)
 
+        img_name_file = open(output_dir_path + 'filenames.txt', 'w')
         results_file = open(output_dir_path + 'results.txt', 'w')
         times_file = open(output_dir_path + 'times.txt', 'w')
 
         for i in range(len(execution_times)):
             results_file.write(str(classification_results[i]))
             times_file.write(str(execution_times[i]))
+            img_name_file.write(str(X_test_names[i]))
             if i != len(execution_times) - 1:
                 results_file.write('\n')
                 times_file.write('\n')
+                img_name_file.write('\n')
 
 
 
