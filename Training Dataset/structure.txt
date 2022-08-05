@@ -1,4 +1,6 @@
-CMP_23/Males/*.jpg
-CMP_23/Females/*.jpg
+The structure of this directory should be as follows:
 
-dataset link: https://www.kaggle.com/datasets/essamwisamfouad/cmp23-handwritten-males-vs-females?resource=download
+1. CMP_23/Males/*.jpg           # Male training images
+2. CMP_23/Females/*.jpg         # Femal training images
+
+CMP_23 dataset link: https://www.kaggle.com/datasets/essamwisamfouad/cmp23-handwritten-males-vs-females?resource=download

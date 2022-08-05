@@ -47,9 +47,8 @@ def get_contour_pixels(preprocessed_image: np.ndarray, th1 = 100000, th2 = 1000)
     return contours_filt
 
 
-def get_hinge_features(image_path = None, image = None):
-    if image is None:
-        image = cv2.imread(image_path)
+def get_hinge_features(image_path):
+    image = cv2.imread(image_path)
 
     preprocessed_image = preprocess_image(image)
     contours = get_contour_pixels(preprocessed_image)

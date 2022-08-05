@@ -1,4 +1,5 @@
 Training Dataset/archive.zip
 Training Dataset/CMP_23/*
-Training Dataset/icdar/*
+Code/experiment.py
+Code/__pycache__/
 **.pyc
