@@ -71,7 +71,7 @@ Open a command terminal window
 
 `pip install -r requirements.txt`
 
-`cd Code/`
+`cd Glassifier/Code/`
 
 If you want to split the training dataset to create the test dataset, then use the following command (Note: use forward slashes in all the directories because  the '\' acts like an escape character):
 
@@ -85,13 +85,15 @@ If you want to provide an external test dataset, then use the following command:
 
 `python predict.py "path/to/output/directory/" -k 'path/to/test/dataset/directory/`
 
-For example (to split the training dataset such that 35% of it becomes the test dataset):
+For example:
 
 `python predict.py "D:/classify/" -k "D:/test/"`
 
 ## References
-<a href="https://link.springer.com/chapter/10.1007/978-3-030-51935-3_25">
-<br>
-<a href="https://ieeexplore.ieee.org/document/6977065">
-<br>
-<a href="https://jivp-eurasipjournals.springeropen.com/articles/10.1186/1687-5281-2014-10#:~:text=Classification%20rates%20are%20reported%20on,and%2047.98%25%20for%20nationality%20prediction">
+<div>
+  <a href="https://link.springer.com/chapter/10.1007/978-3-030-51935-3_25">
+  <br>
+  <a href="https://ieeexplore.ieee.org/document/6977065">
+  <br>
+  <a href="https://jivp-eurasipjournals.springeropen.com/articles/10.1186/1687-5281-2014-10#:~:text=Classification%20rates%20are%20reported%20on,and%2047.98%25%20for%20nationality%20prediction">
+</div>
