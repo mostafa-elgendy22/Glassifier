@@ -37,14 +37,22 @@ Chain codes are then stored in a list for each image as shown in the figure belo
   <img  width="350px" src="Screenshots/chaincode.png" alt="hinge">
 </p>
 
-The extracted features are PDFs of the patterns encountered, for example: 
+The extracted features are PDFs of the patterns encountered, for example:
+
 PDF[‘5’]  -> probability of ‘5’ in all chain codes of the image
+
 PDF[‘53’] -> probability of ‘5’ followed by ‘3’ in all chain codes the image
+
 This is done to all possible patterns up to a length of 3.
+
 Total number of features:
+
 8 for length 1
+
 64 for length 2
+
 512 for length 3
+
 i.e.: a total of 584 numbers composes the chain code feature vector
 
 #### Notes about Feature Extraction
