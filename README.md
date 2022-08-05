@@ -61,7 +61,7 @@ C = 10 [This parameter controls the penalty for a miss-classification]
 1. The features of the training dataset are already saved in the "Saved Data" directory
 2. To download the training dataset and re-extract the features, you can open "Training Dataset/structure.txt"
 3. If an external test dataset is used, the images should be in jpg format
-4. If an external test dataset is used, there should be a text file named "labels.txt" in the dataset directory that specifies the correct classification of the each image (the format of the file can be found at "Training Dataset/labels.txt" (note '1' is used for male and '0' is used for female))
+4. If an external test dataset is used, there should be a text file named "labels.txt" in the dataset directory that specifies the correct classification of the each image (the format of the file can be found at "Training Dataset/labels.txt" (note  that'1' is used for male and '0' is used for female))
 
 ## Run the Project
 
@@ -75,7 +75,7 @@ Open a command terminal window
 
 `cd Code/`
 
-If you want to split the training dataset to create the test dataset, then use the following command (Note: use forward slashes in all the directories because  the '\' acts like an escape character):
+If you want to split the training dataset to create the test dataset, then use the following command (Note: use forward slashes in all the directories because  the '\\' acts like an escape character):
 
 `python predict.py "path/to/output/directory/" -s test_dataset_size`
 
@@ -97,4 +97,4 @@ https://link.springer.com/chapter/10.1007/978-3-030-51935-3_25
 
 https://ieeexplore.ieee.org/document/6977065
 
-https://jivp-eurasipjournals.springeropen.com/articles/10.1186/1687-5281-2014-10#:~:text=Classification%20rates%20are%20reported%20on,and%2047.98%25%20for%20nationality%20prediction"
+https://jivp-eurasipjournals.springeropen.com/articles/10.1186/1687-5281-2014-10
