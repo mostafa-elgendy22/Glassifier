@@ -90,10 +90,9 @@ For example:
 `python predict.py "D:/classify/" -k "D:/test/"`
 
 ## References
-<div>
-  <a href="https://link.springer.com/chapter/10.1007/978-3-030-51935-3_25">
-  <br>
-  <a href="https://ieeexplore.ieee.org/document/6977065">
-  <br>
-  <a href="https://jivp-eurasipjournals.springeropen.com/articles/10.1186/1687-5281-2014-10#:~:text=Classification%20rates%20are%20reported%20on,and%2047.98%25%20for%20nationality%20prediction">
-</div>
+
+https://link.springer.com/chapter/10.1007/978-3-030-51935-3_25
+
+https://ieeexplore.ieee.org/document/6977065
+
+https://jivp-eurasipjournals.springeropen.com/articles/10.1186/1687-5281-2014-10#:~:text=Classification%20rates%20are%20reported%20on,and%2047.98%25%20for%20nationality%20prediction"
