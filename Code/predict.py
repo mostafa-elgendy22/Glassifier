@@ -57,6 +57,8 @@ def main():
         # Find the index of the last occurence of the '\' character in the image path to find the name of the image
         idx = Y_test[i][1].rfind('\\') + 1
         results_file.write('{:<12s}\t{:^12s}\t\t{:^12s}\n'.format(Y_test[i][1][idx:], Y_predicted[i], Y_test[i][0]))
+    results_file.write(dash + '\n')
+    results_file.write(f"Classification Accuracy: {classification_accuracy}%\n")
     results_file.close()
 
     print(f"The classification accuracy = {classification_accuracy}%.\n")

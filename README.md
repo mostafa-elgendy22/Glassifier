@@ -69,7 +69,7 @@ C = 10 [This parameter controls the penalty for a miss-classification]
 1. The features of the training dataset are already saved in the "Saved Data" directory
 2. To download the training dataset and re-extract the features, you can open "Training Dataset/structure.txt"
 3. If an external test dataset is used, the images should be in jpg format
-4. If an external test dataset is used, there should be a text file named "labels.txt" in the dataset directory that specifies the correct classification of the each image (the format of the file can be found at "Training Dataset/labels.txt" (note  that'1' is used for male and '0' is used for female))
+4. If an external test dataset is used, there should be a text file named "labels.txt" in the dataset directory that specifies the correct classification of the each image (the format of the file can be found at "Training Dataset/labels.txt" (note that: '1' is used for male and '0' is used for female))
 
 ## Run the Project
 
@@ -91,6 +91,11 @@ For example (to split the training dataset such that 35% of it becomes the test 
 
 `python predict.py "D:/classify/" -s 0.35`
 
+<p align="center">
+  <img  width="350px" src="Screenshots/split_dataset.png" alt="split">
+</p>
+
+
 If you want to provide an external test dataset, then use the following command:
 
 `python predict.py "path/to/output/directory/" -k 'path/to/test/dataset/directory/`
@@ -98,6 +103,14 @@ If you want to provide an external test dataset, then use the following command:
 For example:
 
 `python predict.py "D:/classify/" -k "D:/test/"`
+
+<p align="center">
+  <img  width="350px" src="Screenshots/keep_dataset_1.png" alt="keep1">
+</p>
+
+<p align="center">
+  <img  width="350px" src="Screenshots/keep_dataset_2.png" alt="keep2">
+</p>
 
 ## References
 
