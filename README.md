@@ -92,7 +92,7 @@ For example (to split the training dataset such that 35% of it becomes the test 
 `python predict.py "D:/classify/" -s 0.35`
 
 <p align="center">
-  <img  width="350px" src="Screenshots/split_dataset.PNG" alt="split">
+  <img src="Screenshots/split_dataset.PNG" alt="split">
 </p>
 
 
@@ -105,11 +105,11 @@ For example:
 `python predict.py "D:/classify/" -k "D:/test/"`
 
 <p align="center">
-  <img  width="350px" src="Screenshots/keep_dataset_1.PNG" alt="keep1">
+  <img src="Screenshots/keep_dataset_1.PNG" alt="keep1">
 </p>
 
 <p align="center">
-  <img  width="350px" src="Screenshots/keep_dataset_2.PNG" alt="keep2">
+  <img src="Screenshots/keep_dataset_2.PNG" alt="keep2">
 </p>
 
 ## References
