@@ -69,9 +69,11 @@ Open a command terminal window
 
 `git clone https://github.com/mostafa-elgendy22/Glassifier.git`
 
+`cd Glassifier/`
+
 `pip install -r requirements.txt`
 
-`cd Glassifier/Code/`
+`cd Code/`
 
 If you want to split the training dataset to create the test dataset, then use the following command (Note: use forward slashes in all the directories because  the '\' acts like an escape character):
 
