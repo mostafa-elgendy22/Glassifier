@@ -62,7 +62,9 @@ The features (hinge & chaincode features) are extracted from the preprocessed im
 ### Machine Learning Model
 
 The used ML model is SVM classifier with the following parameters:
+
 kernel = rbf (defualt) [Radial Basis Function is a kernel that allows curving in the separator]
+
 C = 10 [This parameter controls the penalty for a miss-classification]
 
 ## Side Notes about the Project
